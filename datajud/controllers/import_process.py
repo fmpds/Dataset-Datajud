@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from alembic.config import Config
 from alembic import command
 import pandas as pd
+from pathlib import Path
 
 class ImportProcessController:
     def __init__(self, app: FastAPI, engine):
@@ -19,8 +20,8 @@ class ImportProcessController:
             print(f"Error during Alembic migration: {e}")
 
         try: 
-            # df = pd.read_csv("data.csv")
-            # df.to_sql("data", con=self.engine, if_exists="replace")
+            df = pd.read_csv(Path(__file__).parent.parent.parent / "data.csv")
+            df.to_sql("processo", con=self.engine, if_exists="replace", index=False)
             print("Data imported successfully")
         except Exception as e:
             print(f"Error during data import: {e}")
