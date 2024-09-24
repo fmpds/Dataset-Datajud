@@ -79,6 +79,7 @@ def load_data_from_datajud_api(tribunal, classe):
     url = f"https://api-publica.datajud.cnj.jus.br/api_publica_{tribunal}/_search"
 
     payload = json.dumps({
+        "size":10000,
         "query": {
             "bool": {
                 "must": [
@@ -130,13 +131,14 @@ def load_data_from_datajud_api(tribunal, classe):
     # Fazendo join dos DataFrame de classes e assuntos da TPU
     df = pd.merge(df, assuntos_tpu, how='left', left_on='codigo_assunto', right_on='codassunto')
     df = pd.merge(df, classes_tpu, how='left',  left_on='codigo_classe', right_on='codclasse')
-    df.drop(columns=['descclasse','descassunto','codclasse', 'codassunto'],inplace=True)
 
-    df.rename(columns={'numeroProcesso':'numero_processo'}, inplace=True)
+    df['numero_processo'] = df['numeroProcesso'].astype(str)
+    df.drop(columns=['descclasse','descassunto','codclasse', 'codassunto','numeroProcesso'],inplace=True)
+
     return df
 
 
-load_data_from_datajud_api(tribunal, 1116).to_csv('data.csv')
+load_data_from_datajud_api(tribunal, 1116).to_csv('data.csv', index=False, doublequote=True)
 
 
 # 'orgao_nome' guardar pra pegar os respectivos códigos
