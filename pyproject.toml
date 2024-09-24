@@ -5,9 +5,14 @@ description = "Datajud project"
 authors = ["ML Team"]
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.11"
 fastapi = "^0.68.0"
 uvicorn = "^0.15.0"
+alembic = "^1.13.3"
+psycopg2-binary = "^2.9.9"
+sqlalchemy = "^2.0.35"
+python-dotenv = "^1.0.1"
+pandas = "^2.2.3"
 
 [tool.poetry.dev-dependencies]
 

@@ -1,13 +1,23 @@
+import os
 from fastapi import FastAPI
-import uvicorn
+from sqlalchemy import create_engine
+from dotenv import load_dotenv
+from datajud.controllers.import_process import ImportProcessController
 
-from datajud.routes.predict import router as predict_router
-from datajud.routes.import_process import router as import_router
+load_dotenv()
 
 app = FastAPI()
 
-app.include_router(predict_router)
-app.include_router(import_router)
+database_uri = f"postgresql://{os.getenv('DB_USER')}:{os.getenv('DB_PASSWORD')}@{os.getenv('DB_HOST')}:{os.getenv('DB_PORT')}/{os.getenv('DB_NAME')}"
+engine = create_engine(database_uri)
 
-if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+# Initialize the ImportProcessController
+import_process_controller = ImportProcessController(app, engine)
+
+@app.get("/")
+async def root():
+    return {"message": "Hello World"}
+
+@app.get("/import")
+async def import_process():
+    return import_process_controller.import_process()
