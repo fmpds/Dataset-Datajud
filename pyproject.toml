@@ -6,14 +6,15 @@ authors = ["ML Team"]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-fastapi = "^0.68.0"
+fastapi = "^0.110.0"
 uvicorn = "^0.15.0"
 alembic = "^1.13.3"
 psycopg2-binary = "^2.9.9"
 sqlalchemy = "^2.0.35"
-python-dotenv = "^1.0.1"
 pandas = "^2.2.3"
 requests = "^2.32.3"
+scikit-learn = "^1.5.2"
+pydantic-settings = "^2.5.2"
 
 [tool.poetry.dev-dependencies]
 

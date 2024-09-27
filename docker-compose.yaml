@@ -23,10 +23,10 @@ services:
       context: .
       dockerfile: ./Dockerfile
     ports:
-      - 8009:80
+      - 8000:8000
     env_file:
       - .env
-    command: poetry run uvicorn main:app --host 0.0.0.0 --port 8009
+    command: poetry run uvicorn datajud.app:app --host 0.0.0.0 --port 8000
     networks:
       - docker_compose
     depends_on:

@@ -1,4 +1,3 @@
-import os
 from fastapi import FastAPI
 from alembic.config import Config
 from alembic import command
